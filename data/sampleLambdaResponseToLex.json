@@ -1,0 +1,43 @@
+{
+    "sessionAttributes": {
+        "key1": "value1",
+        "key2": "value2"
+    },
+    "recentIntentSummaryView": [
+        {
+            "intentName": "Name",
+            "checkpointLabel": "Label",
+            "slots": {},
+            "confirmationStatus": "None, Confirmed, or Denied (intent confirmation, if configured)",
+            "dialogActionType": "ElicitIntent, ElicitSlot, ConfirmIntent, Delegate, or Close",
+            "fulfillmentState": "Fulfilled or Failed",
+            "slotToElicit": "Next slot to elicit"
+        }
+    ],
+    "dialogAction": {
+        "type": "Close",
+        "fulfillmentState": "Fulfilled or Failed",
+        "message": {
+          "contentType": "PlainText or SSML or CustomPayload",
+          "content": "Message to convey to the user. For example, Thanks, your pizza has been ordered."
+        },
+       "responseCard": {
+          "version": "integer-value",
+          "contentType": "application/vnd.amazonaws.card.generic",
+          "genericAttachments": [
+              {
+                 "title":"card-title",
+                 "subTitle":"card-sub-title",
+                 "imageUrl":"URL of the image to be shown",
+                 "attachmentLinkUrl":"URL of the attachment to be associated with the card",
+                 "buttons":[ 
+                     {
+                        "text":"button-text",
+                        "value":"Value sent to server on button click"
+                     }
+                  ]
+               } 
+           ] 
+         }
+      }
+}

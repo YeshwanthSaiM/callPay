@@ -1,0 +1,42 @@
+{
+    "messageVersion": "1.0",
+    "invocationSource": "DialogCodeHook",
+    "userId": "5o1x180u47hsixvsh8tm3pwivlimwp6v",
+    "sessionAttributes": {},
+    "requestAttributes": "None",
+    "bot": {
+        "name": "callPay",
+        "alias": "$LATEST",
+        "version": "$LATEST"
+    },
+    "outputDialogMode": "Text",
+    "currentIntent": {
+        "name": "upiRegistration",
+        "slots": {
+            "bankBranch": "None",
+            "pinNumber": "None",
+            "bankName": "None"
+        },
+        "slotDetails": {
+            "bankBranch": {
+                "resolutions": [],
+                "originalValue": "None"
+            },
+            "pinNumber": {
+                "resolutions": [],
+                "originalValue": "None"
+            },
+            "bankName": {
+                "resolutions": [],
+                "originalValue": "None"
+            }
+        },
+        "confirmationStatus": "None"
+    },
+    "inputTranscript": "Add me to callPay",
+    "recentIntentSummaryView": "None",
+    "sentimentResponse": {
+        "sentimentLabel": "NEUTRAL",
+        "sentimentScore": "{Positive: 0.12437062,Negative: 0.0024508052,Neutral: 0.873173,Mixed: 5.533489E-6}"
+}
+}

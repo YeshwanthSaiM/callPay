@@ -1,0 +1,37 @@
+{
+    "messageVersion": "1.0",
+    "invocationSource": "FulfillmentCodeHook",
+    "userId": "21uiubfotypjf8ob9x0093h2o77y8gcg",
+    "sessionAttributes": {},
+    "requestAttributes": "None",
+    "bot": {
+        "name": "callPay",
+        "alias": "$LATEST",
+        "version": "$LATEST"
+    },
+    "outputDialogMode": "Text",
+    "currentIntent": {
+        "name": "payToPhoneNumber",
+        "slots": {
+            "amount": "20",
+            "phoneNumber": "987456123"
+        },
+        "slotDetails": {
+            "amount": {
+                "resolutions": [],
+                "originalValue": "20"
+            },
+            "phoneNumber": {
+                "resolutions": [],
+                "originalValue": "987456123"
+            }
+        },
+        "confirmationStatus": "None"
+    },
+    "inputTranscript": "pay 20 to 987456123",
+    "recentIntentSummaryView": "None",
+    "sentimentResponse": {
+        "sentimentLabel": "NEUTRAL",
+        "sentimentScore": "{Positive: 9.060531E-4,Negative: 0.0042601028,Neutral: 0.9948258,Mixed: 8.051025E-6}"
+    }
+}

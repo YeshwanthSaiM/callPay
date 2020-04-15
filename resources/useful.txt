@@ -1,0 +1,36 @@
+Aim :: For payment app
+
+hacks related ::
+https://www.hackerearth.com/challenges/hackathon/realme-paysa-hackathon/
+Idea :: March 10. 
+
+
+already available solution ::
+https://www.bgr.in/news/upi-now-available-offline-via-ussd-based-mobile-banking-heres-how-it-works-435749/
+
+# set attributes to receiver user information
+https://docs.aws.amazon.com/connect/latest/adminguide/connect-contact-attributes.html
+
+
+# step 2 => 
+Detailed Solution : How we implement the solution in depth.
+Core user scenarios : Different use cases
+How it will help : 
+How it impact :
+effectiveness : 
+
+Tech Stack: 
+Frameworks : 
+Technologies :
+Reason behind using them :
+
+Architecture diagram:
+Flow diagrams: 
+Solutioning
+
+snapshots
+presentations
+
+
+
+

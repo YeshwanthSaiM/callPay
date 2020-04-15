@@ -1,0 +1,17 @@
+callPay ::
+
+1. Polish the idea. Doc Done.
+	Implement in the prototype
+
+To be done by today.
+
+2. Screen Shots 
+3. Presentation
+4. Video recording
+
+4. In house implementation resources.
+5. Git
+6. Instructions.
+
+Remove subscription of : HyperGraf Text Emotion Analysis
+by 15-05-2020

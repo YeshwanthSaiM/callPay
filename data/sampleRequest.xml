@@ -1,0 +1,57 @@
+<upi:ReqBalEnq xmlns:upi="http://npci.org/upi/schema/">
+    <Head ver="2.0" ts="2018-02-17T13:39:56.040+05:30" orgId="112233" msgId="NPC7215eda0afca42a1aa410a2d0349fss4"/>
+    <Txn id="NPC2f38ef0cd4b74bdeaeb6c8cb449c4109" note="ReqBalEnq" refId="NPC7215eda0afca42a1aa410a2d0349fss4" refUrl="http://npci.org/upi/schema" ts="2018-02-17T13:39:56.040+05:30" type="BalEnq">
+        <RiskScores>
+            <Score provider="sp" type="TXNRISK" value="111"/>
+            <Score provider="NPCI" type="TXNRISK" value="11"/>
+        </RiskScores>
+    </Txn>
+    <Payer addr="919819971213@upi" code="0000" name="ABC" seqNum="1" type="PERSON">
+        <Info>
+            <Identity id="abcdefsga" type="ACCOUNT" verifiedName="Ram"/>
+            <Rating VerifiedAddress="TRUE"/>
+        </Info>
+        <Device>
+            <Tag name="MOBILE" value="918143308193"/>
+            <Tag name="GEOCODE" value="19.0911,72.9208"/>
+            <Tag name="LOCATION" value="INDIA"/>
+            <Tag name="ID" value="868210034695367"/>
+            <Tag name="OS" value="Android7.1.2"/>
+            <Tag name="IP" value="10.186.153.241"/>
+            <Tag name="APP" value="com.upi.axispay"/>
+            <Tag name="TYPE" value="USDC"/>
+            <Tag name="CAPABILITY" value="011001"/>
+            <Tag name="TELECOM" value="AIRTEL"/>
+        </Device>
+        <Ac addrType ="MOBILE">
+            <Detail name="MMID" value="7654321"/>
+            <Detail name="MOBNUM" value="912378983423"/>
+        </Ac>
+        <Creds>
+            <Cred type="AADHAAR" subType="AADHAAR-BIO-FP">
+                <Meta lk="43442343423423423" ac="1234dfg56h" sa="2312356789" uid="123455432167" ver="2.0"/>
+                <Data code="NPCI" ki="20150822">
+                                                             base-64 encoded/encrypted authentication data                                
+                </Data>
+            </Cred>
+            <Cred type="OTP" subType="SMS">
+                <Data  code="NPCI" ki="20150822">
+                                                             base-64 encoded/encrypted authentication data                                
+                </Data>
+            </Cred>
+            <Cred type="PIN" subType="MPIN">
+                <Data code="NPCI" ki="20150822">
+                                                             base-64 encoded/encrypted authentication data                                
+                </Data>
+            </Cred>
+            <Cred type="CARD" subType="CVV1">
+                <Data code="NPCI" ki="20150822">
+                                                             base-64 encoded/encrypted authentication data                                
+                </Data>
+            </Cred>
+        </Creds>
+        <Amount value="20.00" curr="INR">
+            <Split name="PURCHASE" value="1"/>
+        </Amount>
+    </Payer>
+</upi:ReqBalEnq>
