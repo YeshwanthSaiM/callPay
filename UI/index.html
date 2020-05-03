@@ -1,0 +1,889 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>CallPay Bot</title>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+		integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://res.cloudinary.com/crcloud/raw/upload/v1565176104/animate_eskckd.css">
+
+	<!--Jquery -->
+	<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.41.0.min.js"></script>
+
+	<style>
+		body {
+			background-color: #eee;
+			font-family: 'Montserrat', sans-serif;
+		}
+
+		.pos-rel {
+			position: relative;
+		}
+
+		.chat-window {
+			width: 30vw;
+			border: 1px solid #033B4A;
+			border-radius: 10px;
+			position: fixed;
+			right: 15px;
+			bottom: 80px;
+			z-index: 1031;
+			transition: all 1s ease;
+		}
+
+		.panel-heading {
+			background-color: #333;
+			border-radius: 10px 10px 0 0;
+			color: #fff;
+			padding: 12px 18px;
+		}
+
+		.bot-image {
+			background-color: transparent;
+			border-radius: 50%;
+			border: 5px solid #E4E2E2;
+			width: 35px;
+			height: 35px;
+			margin-right: 10px;
+			text-align: center;
+		}
+
+		.header-icon {
+			width: 40px;
+			height: 40px;
+			float: right;
+		}
+
+		h4.header-text {
+			font-size: 1.68em;
+			font-weight: bold;
+			margin-bottom: 0;
+		}
+
+		h5.header-baseline {
+			font-size: 0.8em;
+			margin-bottom: 0;
+		}
+
+		.chat-container {
+			height: 64vh;
+			max-height: 64vh;
+			overflow-y: auto;
+			padding: 15px;
+			background: #fff;
+			overflow-x: hidden;
+		}
+
+		.bot-msg .msg {
+			background-color: #e4e2e2;
+			border-radius: 10px;
+			padding: 10px;
+			font-size: 0.8em;
+			font-weight: bold;
+			color: #535353;
+			max-width: 70%;
+			margin-bottom: 10px;
+			word-break: break-word;
+		}
+
+		.user-msg .msg {
+			float: right;
+			text-align: right !important;
+			background-color: #0583ff;
+			color: #fff;
+			border-radius: 10px;
+			padding: 10px;
+			max-width: 70%;
+			font-size: 0.8em;
+			margin-bottom: 10px;
+			word-break: break-word;
+		}
+
+		.panel-footer {
+			z-index: 1;
+			background: #fff;
+			border-bottom-right-radius: 10px;
+			border-bottom-left-radius: 10px;
+			border-top: 1px solid #E4E2E2;
+		}
+
+		.user-input i {
+			margin: auto 5px;
+			color: #666;
+			cursor: pointer;
+		}
+
+		.user-input input {
+			font-size: 14px;
+			padding: 0.8em !important;
+			color: #333;
+		}
+
+		input:focus {
+			outline: none !important;
+		}
+
+		/* Scrollbar CSS */
+
+		::-webkit-scrollbar {
+			width: 6px;
+			height: 6px;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: #535353;
+			border-radius: 10px;
+		}
+
+		/* Scrollbar CSS ends here */
+
+		.attachment_icon,
+		.emoji_icon {
+			width: 18px;
+			height: 18px;
+			color: #000;
+			margin: auto 8px;
+			cursor: pointer;
+			filter: invert(39%);
+		}
+
+		.msg-box {
+			border: none !important;
+			padding-left: 0 !important;
+		}
+
+		.buttons-div {
+			padding: 0 30px 0 50px;
+			margin-bottom: 10px;
+		}
+
+		.single-button {
+			background: #1c7eef;
+			border: 1px solid #1c7eef;
+			border-radius: 30px;
+			color: #fff;
+			text-align: center;
+			padding: 5px 10px;
+			font-size: 13px;
+			margin-right: 5px;
+			margin-bottom: 5px;
+			cursor: pointer;
+			margin-right: 5px;
+			display: inline-block;
+		}
+
+		.bg-image {
+			background-image: url();
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-attachment: fixed;
+		}
+
+		.chat-bubble {
+			/* position: fixed;
+			bottom: 5px;
+			right: 15px; */
+			width: 62px;
+			height: 62px;
+			cursor: pointer;
+			float: right;
+		}
+
+		.bot-image.transparent {
+			width: 45px;
+			height: 45px;
+			margin-right: 10px;
+		}
+
+		.tikcets-container {
+			padding: 10px 18px;
+		}
+
+		.ticket {
+			/* border: 2px solid #1c7eef; */
+			background-color: #e4e2e2;
+			border-radius: 5px;
+			color: #535353;
+			font-size: 12px;
+			padding: 8px 16px;
+			width: 75%;
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: 10px;
+		}
+
+		.ticket::after {
+			content: '';
+			background-color: #fff;
+			border-radius: 50%;
+			width: 16px;
+			height: 16px;
+			position: absolute;
+			top: 50%;
+			right: -8px;
+			transform: translateY(-50%);
+		}
+
+		.ticket::before {
+			content: '';
+			background-color: #fff;
+			border-radius: 50%;
+			width: 16px;
+			height: 16px;
+			position: absolute;
+			top: 50%;
+			left: -8px;
+			transform: translateY(-50%);
+		}
+
+		.ticket:last-child {
+			margin-bottom: 0;
+		}
+
+		.ticket label {
+			font-weight: bold;
+		}
+
+		.ticket label,
+		.ticket p {
+			margin-bottom: 0;
+			word-break: break-word;
+		}
+
+		.ticket .single-button {
+			font-size: 10px !important;
+		}
+
+		.line-ellipsis {
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.line-ellipsis.one {
+			-webkit-line-clamp: 1;
+		}
+
+		.line-ellipsis.two {
+			-webkit-line-clamp: 2;
+		}
+
+		.chat-bubble-area {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: #fff;
+			padding: 5px;
+		}
+
+		.bot-icon {
+			width: 50px;
+			height: 50px;
+			float: right;
+		}
+
+		.slideInLeft {
+			animation-duration: 1.5s;
+		}
+
+		.tic-container {
+			background-color: #1C7EEF;
+			border-radius: 10px;
+			padding: 20px;
+			margin-bottom: 10px;
+			max-width: 75%;
+		}
+
+		.tic {
+			padding-top: 10px;
+			padding-bottom: 15px;
+			border-bottom: 1px solid #fff;
+		}
+
+		.tic:last-child {
+			border-bottom: none;
+		}
+
+		.tic-title {
+			color: #FDDC82;
+			font-size: 14px;
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+
+		.tic-desc {
+			color: #fff;
+			font-size: 12px;
+			margin-bottom: 5px;
+		}
+
+		.tic-btn {
+			display: inline-block;
+			color: #fff;
+			font-size: 10px;
+			border: 1px solid #fff;
+			border-radius: 30px;
+			padding: 5px 10px;
+			margin-top: 10px;
+			margin-right: 10px;
+			text-align: center;
+			cursor: pointer;
+		}
+
+		.powered-by-sec {
+			background-color: #fff;
+			font-size: 10px;
+			text-align: right;
+			padding: 3px;
+		}
+
+		@media screen and (max-width:767px) {
+			.chat-window {
+				width: 80vw;
+			}
+		}
+
+		.card-msg {
+			background: #f5f5f5;
+			border-radius: 5px;
+			border-top: 2px solid #1c7eef;
+			padding: 15px;
+			margin-bottom: 10px;
+		}
+
+		.card-msg-header {
+			font-size: 0.9em;
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+
+		.card-msg-description {
+			font-size: 0.75em;
+			color: #333;
+			margin-bottom: 0;
+		}
+
+		.card-btn {
+			display: inline-block;
+			padding: 5px 10px;
+			background-color: transparent;
+			border: 1px solid #1c7eef;
+			color: #1c7eef;
+			border-radius: 30px;
+			font-size: 0.65em;
+			cursor: pointer;
+			margin-right: 10px;
+			margin-bottom: 10px;
+			transition: all 0.5s ease;
+		}
+
+		.card-btn:last-child {
+			margin-right: 0;
+		}
+
+		.card-btn:hover {
+			background-color: #1c7eef;
+			color: #fff;
+		}
+	</style>
+</head>
+
+<body class="bg-image">
+
+	<div class="panel panel-default chat-window" style="display: none">
+		<div class="panel-heading pos-rel">
+			<div class="row">
+				<div class="col-6">
+					<h4 class="header-text">CallPay</h4>
+					<h5 class="header-baseline">Finance bot</h5>
+				</div>
+				<div class="col-6">
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div class="chat-container">
+				<div class="row animated slideInLeft">
+					<div class="col-12">
+						<div class="bot-msg d-flex">
+							<div>
+								<div class="bot-image">
+
+								</div>
+							</div>
+							<div class="msg">
+								<p class="mb-0">Hello! How can I help you today?</p>
+							</div>
+						</div>
+						<!-- <div class="buttons-div">
+							<div class="single-button" data-value="Find a meeting">Find a meeting</div>
+							<div class="single-button" data-value="Book a meeting">Book a meeting</div>
+							<div class="single-button" data-value="Today meeting">Today meetings</div>
+
+						</div> -->
+					</div>
+				</div>
+				<!-- <div class="row animated slideInLeft">
+					<div class="col-12">
+						<div class="bot-msg d-flex">
+							<div>
+								<div class="bot-image">
+
+								</div>
+							</div>
+							<div>
+								<div class="card-msg">
+									<h4 class="card-msg-header">Your Meetings</h4>
+									<p class="card-msg-description">You have 2 meetings today.</p>
+									<div class="card-btn-grp pt-3">
+										<span class="card-btn single-button" data-value="Search Meeting">Find a
+											Meeting</span>
+										<span class="card-btn single-button" data-value="New Meeting">Book a
+											Meeting</span>
+									</div>
+								</div>
+								<div class="card-msg">
+									<h4 class="card-msg-header">Tasks</h4>
+									<p class="card-msg-description">You have 2 tasks today.</p>
+									<div class="card-btn-grp pt-3">
+										<span class="card-btn single-button" data-value="Search Meeting">Find a
+											Task</span>
+										<span class="card-btn single-button" data-value="New Meeting">Create a
+											Task</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-12">
+					<div class="user-input d-flex">
+						<input type="text" id="user-text" class="form-control-plaintext"
+							placeholder="Select above or type a message">
+						<img src="https://chatscreentemplateimages.s3.amazonaws.com/attach.png" class="attachment_icon">
+						<img src="https://res.cloudinary.com/crcloud/image/upload/v1564575559/happy_tzv9h9.png"
+							class="emoji_icon">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="chat-bubble-area">
+		<div class="chat-bubble" data-position="close">
+			<img src="data:image/png;base64,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"
+				alt="callPay" class="w-100">
+		</div>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+		</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+		</script>
+
+</body>
+<script>
+	var user_session = {};
+	var lexruntime;
+	var lexUserId = "user_" + Math.floor(Math.random() * 90000) + 10000;
+	var welcomeMessage = "Hello! I am your ticketing management agent. I am here to help you . How can I help you today?";
+	var errorMessage = "Sorry! Something went wrong please try again after some time.";
+	var botName = "callPay"; 		//'callPay_Bot';
+	var botAlias = "$LATEST";		//'callPay_bot_first';
+	var identity_pool_id = "us-east-1:99ee3bca-6c5e-40a4-93f0-a16b2e489f9f";	//"us-east-1:e73cb695-9300-46b3-96d1-f33ba6422509";
+	$(document).ready(function () {
+
+		configreAWS();
+		$('#user-text').keydown(function (event) {
+			var keyCode = (event.keyCode ? event.keyCode : event.which);
+			if (keyCode == 13) {
+				chatActions();
+			}
+		});
+
+		$(document).on('click', '.single-button', function () {
+			var message = $(this).attr('data-value');
+			var dispaly_text = $(this).text();
+			vanish_buttons();
+			vanish_Tickets();
+			appendUserMessage(dispaly_text);
+			getBotResponse(message);
+		});
+		$(document).on('click', '.tic-btn', function () {
+			var message = $(this).attr('data-value');
+			var dispaly_text = $(this).text();
+			vanish_buttons();
+			vanish_Tickets();
+			appendUserMessage(dispaly_text);
+			var session_specifier;
+			if (dispaly_text.toLowerCase() == "view notes") {
+				session_specifier = "view notes";
+			}
+			if (dispaly_text.toLowerCase() == "add notes") {
+				session_specifier = "add notes";
+			}
+			getBotResponse(message, session_specifier);
+		});
+		//getBotResponse("Today meeting");
+	});
+
+	function chatActions() {
+		var message = $('#user-text').val();
+		if (message) {
+			vanish_buttons();
+			appendUserMessage(message);
+			// $("#user-text").prop('disabled', true);
+			getBotResponse(message);
+		}
+	}
+
+	function appendUserMessage(message) {
+		var out_going_message = `<div class="row animated slideInRight">
+				<div class="col-12">
+					<div class="user-msg">
+						<div class="msg">
+							<p class="mb-0">` + message + `</p>
+						</div>
+					</div>
+				</div>
+			</div>`;
+		$('.chat-container').append(out_going_message);
+		$('#user-text').val('');
+		$('.chat-container').scrollTop(20000);
+	}
+
+
+	function getBotResponse(message, session_specifier) {
+		// send it to the Lex runtime
+		message = checkForFreeText(message);
+		if (session_specifier) {
+			user_session.session_specifier = session_specifier;
+		}
+		console.log("Message " + message);
+		console.log("User session " + JSON.stringify(user_session));
+		appendTyping();
+		var params = {
+			botAlias: botAlias,
+			botName: botName,
+			inputText: message,
+			userId: lexUserId,
+			sessionAttributes: user_session
+		};
+		params.sessionAttributes.channelId = "56b2b1dc-9281-4643-ab91-027f8633ffe9";
+		var resp;
+
+		lexruntime.postText(params, function (err, data) {
+			if (err) {
+				console.log(err, err.stack);
+				$('.incoming_msg').last().remove();
+				appendBotResponse(errorMessage);
+				$("#user-text").prop('disabled', false);
+				$("#user-text").focus();
+			}
+			if (data) {
+				console.log('data is :' + JSON.stringify(data));
+				setTimeout(function () {
+
+					$('.incoming_msg').last().remove();
+					console.log("Bot response is " + JSON.stringify(data));
+					user_session = data.sessionAttributes;
+					// var domain_values = JSON.parse(user_session.domain_values);
+					// console.log("Domain values are ::: " + JSON.stringify(domain_values));6
+					var response_type = "buttons";
+					// if (domain_values.responsetype == "meetings") { response_type = "meetings"; }
+					var response_cards = process_response_cards(data.responseCard, response_type);
+					$("#user-text").prop('disabled', false);
+					appendBotResponse(data.message, response_cards, response_type);
+				}, 500);
+			}
+		});
+
+
+		// $.ajax('http://localhost:8080/api/getsbresponse', {
+		// 	type: 'POST', // http method
+		// 	data: params, // data to submit
+		// 	success: function (data, status, xhr) {
+		// 		console.log("params ......", JSON.stringify(params))
+		// 		console.log('sucess in lex request:' + JSON.stringify(data));
+		// 		console.log("Bot response is " + JSON.stringify(data));
+		// 		user_session = data.sessionAttributes;
+		// 		var domain_values = JSON.parse(user_session.domain_values);
+		// 		var response_type = "buttons";
+		// 		if (domain_values.responsetype == "meetings") {
+		// 			response_type = "meetings";
+		// 		}
+
+		// 		if (data.dialogAction.responseCard) {
+		// 			resp = process_response_cards(data.dialogAction.responseCard.genericAttachments, data
+		// 				.slotToElicit);
+		// 		}
+		// 		appendBotResponse(data.dialogAction.message.content, resp, response_type);
+		// 	},
+		// 	error: function (jqXhr, textStatus, errorMessage) {
+		// 		console.log(errorMessage, error.stack);
+		// 		$('.incoming_msg').last().remove();
+		// 		$("#user-text").prop('disabled', false);
+		// 		$("#user-text").focus();
+		// 		appendBotResponse(errorMessage);
+		// 	}
+		// });
+	}
+	// function appendMainMenu() {
+	// 	let message = `<div class="row animated slideInLeft" style="animation-delay:2s;">
+	// 		<div class="col-12">
+	// 			<div class="bot-msg d-flex">
+	// 				<div>
+	// 					<div class="bot-image">
+	//
+	// 					</div>
+	// 				</div>
+	// 				<div class="msg">
+	// 					<p class="mb-0">Is there anything else I can help you with?</p>
+	// 				</div>
+	// 			</div>
+	// 			<div class="buttons-div">
+	// 				<div class="single-button" data-value="Create a ticket">Find an Answer</div>
+	// 				<div class="single-button" data-value="Get all tickets">See all Tickets</div>
+	// 				<div class="single-button" data-value="Get case status">Track Ticket Status</div>
+	// 			</div>
+	// 		</div>
+	// 	</div>`;
+	// 	appendMessages(message);
+	// }
+
+	function checkForFreeText(message) {
+		if (user_session && user_session.domain_values && user_session.domain_values.length > 0) {
+			var free_text_obj = JSON.parse(user_session.domain_values);
+			if (free_text_obj.free_text) {
+				let msg = free_text_obj.free_text;
+				free_text_obj.free_text = message;
+				free_text_obj.free_text_slot = free_text_obj.free_text_slot;
+				user_session.domain_values = JSON.stringify(free_text_obj);
+				return msg;
+			} else {
+				return message;
+			}
+		} else {
+			return message;
+		}
+	}
+
+	function appendBotResponse(botResponse, buttons, response_type) {
+		if (!buttons) {
+			buttons = '';
+		}
+		var messages = "";
+		var responses = botResponse.split("<br />");
+		var msg_arr = [];
+		// responses.push(buttons);
+		// responses = ["By Opportunity","Pending Tasks","Completed Tasks"];
+		for (var i = 0; i <= responses.length - 1; i++) {
+			var incoming_msg = `<div class="row animated slideInLeft">
+				<div class="col-12">
+					<div class="bot-msg d-flex">
+						<div>
+							<div class="bot-image">
+							</div>
+						</div>
+						<div class="msg">
+							<p class="mb-0">` + responses[i] + `</p>
+						</div>
+					</div>
+				</div>
+			</div>`;
+			// appendMessages(incoming_msg);
+			msg_arr.push(incoming_msg);
+		}
+		// $("#user-text").focus();
+		if (buttons) {
+			msg_arr.push(buttons);
+		}
+		msg_arr.push();
+		for (let k = 0; k <= msg_arr.length - 1; k++) {
+			setTimeout(function () {
+				appendTyping();
+				appendMessages(msg_arr[k]);
+			}, 2000 * k);
+		}
+	}
+
+	function removeTyping() {
+		$(".typing").remove();
+	}
+
+	function appendMessages(input_message) {
+		setTimeout(function () {
+			$('.chat-container').append(input_message);
+			$('.chat-container').scrollTop(20000);
+			removeTyping();
+		}, 1000);
+
+	}
+	//
+	function process_response_cards(responseCard, response_type) {
+		console.log("Inprocess Response cards" + JSON.stringify(responseCard));
+		var buttons = [];
+		if (responseCard && responseCard.length > 0) {
+			console.log("Response cards after in condition");
+			var buttons_values = JSON.parse(JSON.stringify(responseCard));
+			console.log("button values" + JSON.stringify(buttons_values));
+			var check_carousel = check_for_carousel(buttons_values);
+			console.log("check carousel" + check_carousel);
+			if (!check_carousel) {
+				for (var i = 0; i <= buttons_values.length - 1; i++) {
+					var btn = {};
+					for (var j = 0; j <= buttons_values[i].buttons.length - 1; j++) {
+						btn.text = buttons_values[i].buttons[j].text ? buttons_values[i].buttons[j].text : "";
+						btn.val = buttons_values[i].buttons[j].value;
+						buttons.push(btn);
+					}
+				}
+				return buttons_div_construct(buttons, response_type);
+			} else {
+				console.log("**********");
+				return '';
+			}
+		}
+	}
+
+	function check_for_carousel(arr) {
+		console.log("check carousel" + JSON.stringify(arr));
+
+		for (var i = 0; i <= arr.length - 1; i++) {
+			if (arr[i].imageUrl) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function buttons_div_construct(p_buttons, response_type) {
+		console.log("Buttons are ::: " + JSON.stringify(p_buttons));
+		console.log("Response type is ::: " + response_type);
+		if (response_type == "meetings") {
+
+			var meeting_html = `<div class="row animated slideInLeft">
+				<div class="col-12">
+					<div class="bot-msg d-flex">
+						<div>
+							<div class="bot-image">
+
+							</div>
+						</div>`;
+			for (let i = 0; i <= p_buttons.length - 1; i++) {
+				var each_meeting = `
+						<div class="card-msg">
+							<p class="card-msg-description">` + p_buttons[i].title + `</p>
+							<div class="card-btn-grp pt-3">
+								<span class="card-btn single-button" data-value="` + p_buttons[i].val + `">Reschedule Meeting</span>
+								<span class="card-btn single-button" data-value="` + p_buttons[i].val + `">Cancel Meeting</span>
+							</div>
+						</div>`;
+				meeting_html += each_meeting;
+			}
+			meeting_html += `</div>
+					</div>
+				</div>`;
+			return meeting_html;
+		} else {
+			console.log("In else %%%%%%")
+			var html_buttons = '<div class="buttons-div animated slideInLeft">';
+			for (var i = 0; i <= p_buttons.length - 1; i++) {
+				var single_button = `<div class="single-button" data-value="` + p_buttons[i].val + `">` + p_buttons[i]
+					.text + `</div>`;
+				html_buttons += single_button;
+			}
+			console.log("html_buttons" + html_buttons);
+			removeTyping();
+			return html_buttons += '</div></div></div>';
+		}
+	}
+
+	function vanish_buttons() {
+		$('.single-button').remove();
+	}
+
+	function vanish_Tickets() {
+		$('.tic-container').parents('.tic-parent').remove();
+	}
+
+	function appendTyping() {
+		var typing = `<div class="row incoming_msg typing animated fadeIn" style="animation-duration:1s; animation-delay:1s">
+				<div class="col-12">
+					<div class="bot-msg d-flex">
+						<div>
+							<div class="bot-image">
+							</div>
+						</div>
+						<img src="https://res.cloudinary.com/crcloud/image/upload/v1561718944/typing_v5tw6h.svg" height="50" />
+					</div>
+				</div>
+			</div>`;
+		$('.chat-container').append(typing);
+		$('.chat-container').scrollTop(20000);
+	}
+
+	function configreAWS() {
+		AWS.config.update({
+			"region": "us-east-1"
+		});
+		AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+			IdentityPoolId: identity_pool_id
+		});
+		lexruntime = new AWS.LexRuntime();
+		AWS.config.apiVersions = {
+			lexruntime: '2016-11-28',
+		};
+	}
+
+	$('.chat-bubble').click(function () {
+		if ($(this).attr('data-position') == "close") {
+			$('.chat-window').css("display", "unset");
+			$(this).attr('data-position', 'open');
+			$(this).html('');
+			$(this).html(
+				'<img src="https://res.cloudinary.com/crcloud/image/upload/v1564666791/ic-close-yellow_ed4y1o.png" alt="Sara Chatbot" class="w-100">'
+			);
+		} else {
+			$('.chat-window').css("display", "none");
+			$(this).attr('data-position', 'close');
+			$(this).html('');
+			$(this).html(
+				'<img src="data:image/png;base64,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" alt="Sara Chatbot" class="w-100">'
+			);
+		}
+	})
+</script>
+<script>
+	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
+
+</html>
